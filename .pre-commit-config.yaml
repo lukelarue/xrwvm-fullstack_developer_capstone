@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.9
+    hooks:
+      - id: ruff
+        args: [--fix]          # DROP --exit-non-zero-on-fix
+        stages: [post-commit]
+      - id: ruff-format
+        stages: [post-commit]
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        stages: [post-commit]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    # Prefer a stable tag; e.g. v3.3.3 or v3.3.3-1 (avoid alpha)
+    rev: v3.3.3
+    hooks:
+      - id: prettier
+        stages: [post-commit]
+
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint (fix)
+        entry: npx eslint
+        language: system
+        types_or: [javascript, jsx, ts, tsx]
+        args: ["--fix"]
+        pass_filenames: true
+        stages: [post-commit]
